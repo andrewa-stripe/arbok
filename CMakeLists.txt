@@ -3,6 +3,16 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(arbok VERSION 1.0.0)
 
+message(STATUS "set compipler")
+set(CMAKE_C_COMPILER "/opt/homebrew/Cellar/llvm/15.0.6/bin/clang")
+set(CMAKE_CXX_COMPILER "/opt/homebrew/Cellar/llvm/15.0.6/bin/clang++")
+set(OPENMP_LIBRARIES "/opt/homebrew/Cellar/llvm/15.0.6/lib")
+set(OPENMP_INCLUDES "/opt/homebrew/Cellar/llvm/15.0.6/include")
+ 
+set(OPENMP_LIBRARIES "/usr/local/opt/llvm/lib")
+link_directories(${OPENMP_LIBRARIES})
+
+
 set (CMAKE_CXX_STANDARD 20)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Intel")

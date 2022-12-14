@@ -1,5 +1,5 @@
 
-find_package(OpenMP REQUIRED)
+# find_package(OpenMP REQUIRED)
 
 set(target arbok)
 
