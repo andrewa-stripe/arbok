@@ -83,21 +83,21 @@ void run(map<string, string>& args) {
         t.stop("add random weights");
     } else {
         t.start("check weights"); // this is done so that INF does not overflow int
-        int mn_weight = 0;
+        double mn_weight = 0;
         for(auto& [u,v,w] : graph.edges)
             mn_weight = min(mn_weight,w);
         if(mn_weight<0) {
-            long long mx_weight = 0;
+            long double mx_weight = 0;
             for(auto& [u,v,w] : graph.edges) {
                 w -= mn_weight;
-                mx_weight = max<long long>(mx_weight, w);
+                mx_weight = max<long double>(mx_weight, w);
             }
             cout << "WARNING: found negative weights. scaling up to be positive; new max weight is " << mx_weight << endl;
         }
         t.stop("check weights");
     }
 
-    const int INF = 1e9;
+    const double INF = 1e9;
 
     int root = graph.n;
     if(args["root"].empty()) {
@@ -111,7 +111,7 @@ void run(map<string, string>& args) {
     }
 
     long con, run, rec;
-    long long res;
+    long double res;
     vector<int> arbo;
     t.start("total");
     {
@@ -158,7 +158,7 @@ void run(map<string, string>& args) {
     cout << "n      =" << graph.n << endl;
     cout << "m      =" << size(graph.edges) << endl;
     cout << "w      =" << res << endl;
-    cout << "w%1e9  =" << res%int(1e9) << endl;
+    // cout << "w%1e9  =" << res%int(1e9) << endl;
     cout << "w/1e9  =" << res/1'000'000'000 << endl;
 
     if(!empty(args["outfile"])) {

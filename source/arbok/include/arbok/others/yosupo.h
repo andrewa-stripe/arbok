@@ -9,7 +9,7 @@
 
 namespace YosupoDS {
 
-using ll = long long;
+using ll = long double;
 template <class T> using V = std::vector<T>;
 template <class T> using VV = V<V<T>>;
 
@@ -106,11 +106,11 @@ private:
 public:
     Yosupo(int _n, int /*m*/) : n(_n), heap(2*_n), res(2*n), tr(2*_n,-1) {}
 
-    void create_edge(int from, int to, int weight) {
-        heap[to].push({from,to,(long long)weight, m++});
+    void create_edge(int from, int to, double weight) {
+        heap[to].push({from,to,(long double)weight, m++});
     }
 
-    long long run(int root) {
+    long double run(int root) {
         // union find
         std::vector<int> uf(2 * n, -1);
         auto find = [&](int i) {
@@ -125,7 +125,7 @@ public:
             return i;
         };
 
-        long long ans = 0;
+        long double ans = 0;
         std::vector<int> used(2 * n);
         used[root] = 1;
         auto mark = [&](int p) {

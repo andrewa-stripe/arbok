@@ -33,7 +33,7 @@ void testImpl(const string& testcase_name) {
     for(auto e : graph.edges)
         alg.create_edge(e.from, e.to, e.weight);
 
-    long long ans;
+    long double ans;
     answer_file >> ans;
 
     auto res = alg.run(0);

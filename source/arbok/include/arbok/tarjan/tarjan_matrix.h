@@ -9,12 +9,12 @@ namespace arbok {
 class TarjanMatrix : public Tarjan<TarjanMatrix> {
     using Elem = std::pair<int,int>; // weight from
     std::vector<std::vector<Elem>> adj;
-    static constexpr int INF = 1e9+3;
+    static constexpr double INF = 1e9+3;
 
 public:
     TarjanMatrix(int n, int m) : Tarjan<TarjanMatrix>(n,m), adj(n, std::vector<Elem>(n,{INF,-1})) { }
 
-    void create_edge_internal(int from, int to, int weight, int idx) {
+    void create_edge_internal(int from, int to, double weight, int idx) {
         adj[to][from] = min(adj[to][from], {weight,idx});  // we save backwards edges in the adjacency matrix
     }
 

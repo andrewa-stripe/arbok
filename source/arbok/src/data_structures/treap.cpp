@@ -3,21 +3,21 @@
 
 #include <random>
 
-using ll = long long;
+using ll = long double;
 using namespace std;
 
 namespace arbok::treap {
 
 static mt19937 rng(1337);
 
-constexpr pair<int,int> NO_EDGE{1e9+3,-1};
+constexpr pair<double,int> NO_EDGE{1e9+3,-1};
 
-Node::Node(int weight, int idx) : y(rng()), x{weight,idx}, mn{weight,idx} {}
+Node::Node(double weight, int idx) : y(rng()), x{weight,idx}, mn{weight,idx} {}
 
-pair<int,int> mn(Node *v) { return v ? v->mn : NO_EDGE; }
+pair<double,int> mn(Node *v) { return v ? v->mn : NO_EDGE; }
 void update(Node *v) { v->mn = min({mn(v->l), v->x, mn(v->r)}); }
 
-void apply(Node *v, int lz) {
+void apply(Node *v, double lz) {
     if (!v) return;
     v->x.first += lz;
     v->mn.first += lz;

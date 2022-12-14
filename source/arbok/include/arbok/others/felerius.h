@@ -65,11 +65,11 @@ namespace arbok {
 
 class Felerius {
 private:
-    struct SkewHeapNode { int l, r, from, to, weight, lz; };
+    struct SkewHeapNode { int l, r, from, to; double weight, lz; };
     std::vector<SkewHeapNode> nodes; // one skew heap node per edge of the input
     std::vector<int> heap;
 
-    void apply(int i, int upd) { nodes[i].weight -= upd; nodes[i].lz += upd; }
+    void apply(int i, double upd) { nodes[i].weight -= upd; nodes[i].lz += upd; }
     void push(int i) {
         if (nodes[i].l != -1) apply(nodes[i].l, nodes[i].lz);
         if (nodes[i].r != -1) apply(nodes[i].r, nodes[i].lz);
@@ -95,15 +95,15 @@ public:
 
     Felerius(int n, int /*m*/) : heap(n,-1), dsu_contract(n), edge(n,-1) {}
 
-    void create_edge(int from, int to, int weight) {
+    void create_edge(int from, int to, double weight) {
         assert(0 <= from && from < size(heap) && 0 <= to && to < size(heap));
         nodes.push_back(SkewHeapNode{-1, -1, from, to, weight, 0});
         heap[to] = merge(heap[to], int(size(nodes)) - 1);
     }
 
-    long long run(int root) {
+    long double run(int root) {
         assert(0 <= root && root < size(heap));
-        long long ans = 0;
+        long double ans = 0;
         FeleriusDS::Dsu dsu_cyc(int(size(heap)));
         for(int i=0; i<size(heap); ++i) {
             if (i == root) continue;

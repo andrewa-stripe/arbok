@@ -14,7 +14,7 @@ class TarjanSet : public Tarjan<TarjanSet> {
 public:
     TarjanSet(int n, int m) : Tarjan<TarjanSet>(n,m), managedSets(n), offsets(n,0) { }
 
-    void create_edge_internal(int /* from */, int to, int weight, int idx) {
+    void create_edge_internal(int /* from */, int to, double weight, int idx) {
         managedSets[to].emplace(weight,idx);
     }
 

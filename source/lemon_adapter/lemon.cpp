@@ -17,11 +17,11 @@ struct arbok::LemonImpl {
         for(int i=0; i<n; ++i)
             graph.addNode();
     }
-    void create_edge(int from, int to, int weight) {
+    void create_edge(int from, int to, double weight) {
         auto arc = graph.addArc(graph.nodeFromId(from), graph.nodeFromId(to));
         weights[arc] = weight;
     }
-    long long run(int root) {
+    long double run(int root) {
         algo.run(graph.nodeFromId(root));
         return algo.arborescenceCost();
     }
@@ -34,7 +34,7 @@ struct arbok::LemonImpl {
     }
 
     using LGraph = lemon::SmartDigraph;
-    using LMap = LGraph::ArcMap<long long>;
+    using LMap = LGraph::ArcMap<long double>;
     using LAlg = lemon::MinCostArborescence<LGraph,LMap>;
 
     LGraph graph;
@@ -45,8 +45,8 @@ struct arbok::LemonImpl {
 // the adapter just passes through to the impl
 Lemon::~Lemon() = default;
 arbok::Lemon::Lemon(int n, int m) : num_vertices(n), m_impl(make_unique<LemonImpl>(n, m)) { }
-void Lemon::create_edge(int from, int to, int weight) { m_impl->create_edge(from,to,weight); }
-long long Lemon::run(int root) { return m_impl->run(root); }
+void Lemon::create_edge(int from, int to, double weight) { m_impl->create_edge(from,to,weight); }
+long double Lemon::run(int root) { return m_impl->run(root); }
 std::vector<int> Lemon::reconstruct(int root) { return m_impl->reconstruct(root); }
 
 #else
@@ -58,7 +58,7 @@ arbok::Lemon::Lemon(int n, int m) : num_vertices(n) {
     std::cout << "ERROR: can't use lemon solver without lemon" << endl;
     exit(1);
 }
-void Lemon::create_edge(int from, int to, int weight) { }
-long long Lemon::run(int root) { return 0; }
+void Lemon::create_edge(int from, int to, double weight) { }
+long double Lemon::run(int root) { return 0; }
 std::vector<int> Lemon::reconstruct(int root) { return {}; }
 #endif

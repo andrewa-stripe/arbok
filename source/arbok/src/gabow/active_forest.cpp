@@ -8,16 +8,16 @@ using namespace arbok;
 using namespace std;
 
 struct FibHeapNode {
-    FibHeapNode(int _from, int _to, int _weight, int _id) : from(_from), to(_to), weight(_weight), id(_id) {};
+    FibHeapNode(int _from, int _to, double _weight, int _id) : from(_from), to(_to), weight(_weight), id(_id) {};
 
-    int from,to,weight,id;
+    int from,to; double weight; int id;
     FibHeapNode *parent = nullptr; // The root of any tree in an F-heap is always in its home heap
     list<FibHeapNode*> children;
     list<FibHeapNode*>::iterator list_it; // iterator to myself in either children list of parent or root list of home_heap
     bool is_loser = false;
 };
 
-ActiveForest::ActiveForest(CompressedTree<int> &_co)
+ActiveForest::ActiveForest(CompressedTree<double> &_co)
     : co(_co)
     , active_edge(co.size())
     , active_sets(co.size())
@@ -29,7 +29,7 @@ ActiveForest::~ActiveForest() {
         delete v; // clang told me deleting nullptr is ok :)
 }
 
-void ActiveForest::makeActive(int from, int to, int weight, int id) {
+void ActiveForest::makeActive(int from, int to, double weight, int id) {
     int from_rep = co.find(from);
     if(!active_edge[from_rep]) // from has no active edge yet
         return moveHome(active_edge[from_rep] = new FibHeapNode(from,to,weight,id));
@@ -124,6 +124,6 @@ void ActiveForest::loseChild(FibHeapNode* v) {
     v->is_loser ^= 1;
 }
 
-int ActiveForest::curWeight(FibHeapNode *v) {
+double ActiveForest::curWeight(FibHeapNode *v) {
     return v->weight + co.find_value(v->to);
 }

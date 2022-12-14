@@ -11,7 +11,7 @@ namespace SpaghettiDS {
 
 struct edge {
     int src, dst;
-    int weight;
+    double weight;
 };
 
 struct union_find {
@@ -32,7 +32,7 @@ struct skew_heap {
     struct node {
         node *ch[2];
         edge key;
-        int delta;
+        double delta;
     } *root;
     skew_heap() : root(0) { }
     void propagate(node *a) {
@@ -68,11 +68,11 @@ struct skew_heap {
     bool empty() {
         return !root;
     }
-    void add(int delta) {
+    void add(double delta) {
         root->delta += delta;
     }
     void merge(skew_heap x) {
-        root = merge(root, x.root);
+        root = merge(root, x.root); 
     }
 };
 
@@ -90,15 +90,15 @@ class Spaghetti {
 public:
     Spaghetti(int _n, int /* _m */) : n(_n), heap(_n) {};
 
-    void create_edge(int src, int dst, int weight) {
+    void create_edge(int src, int dst, double weight) {
         edges.push_back({src, dst, weight});
         heap[dst].push(edges.back());
     }
 
-    long long run(int root) {
+    long double run(int root) {
         SpaghettiDS::union_find uf(n);
 
-        long long score = 0;
+        long double score = 0;
         std::vector<int> seen(n, -1);
         seen[root] = root;
         for (int s = 0; s < n; ++s) {

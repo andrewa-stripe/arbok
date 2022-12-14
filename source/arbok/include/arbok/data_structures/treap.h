@@ -9,11 +9,11 @@ namespace arbok::treap {
     struct Node {
         Node *l = nullptr, *r = nullptr;
         long unsigned int y;
-        std::pair<int,int> x, mn; // each pair is (weight,idx) of some edge
-        int lz = 0;
+        std::pair<double,int> x, mn; // each pair is (weight,idx) of some edge
+        double lz = 0;
 
         Node() = default;
-        Node(int weight, int idx);
+        Node(double weight, int idx);
         Node(Node&&) = default;
         Node& operator=(const Node&) = default;
     };
@@ -31,11 +31,11 @@ namespace arbok::treap {
         int next_node_;
     };
 
-    std::pair<int,int> mn(Node *v);
+    std::pair<double,int> mn(Node *v);
 
     void update(Node *v);
 
-    void apply(Node *v, int lz);
+    void apply(Node *v, double lz);
 
     void push(Node *v);
 

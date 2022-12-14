@@ -6,7 +6,8 @@
 namespace arbok {
 
 struct Graph {
-    struct Edge { int from, to, weight; };
+    struct Edge { int from, to;
+        double weight; };
     int n = 0;
     std::vector<Edge> edges;
     bool weighted = false;
@@ -18,6 +19,6 @@ Graph giantCC(const Graph& graph);
 
 Graph fromFile(const std::string& file);
 
-bool isArborescence(const Graph& graph, const std::vector<int>& arbo, long long claimed_weight, int root);
+bool isArborescence(const Graph& graph, const std::vector<int>& arbo, long double claimed_weight, int root);
 
 }

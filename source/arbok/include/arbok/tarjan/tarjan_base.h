@@ -11,7 +11,7 @@ namespace arbok {
 template<class DS>
 class Tarjan {
 protected:
-    struct Edge { int from, to, weight; };
+    struct Edge { int from, to; double weight; };
 
     const int num_vertices;
     std::vector<Edge> edges;
@@ -34,14 +34,14 @@ protected:
     }
 
 public:
-    void create_edge(int from, int to, int weight) {
+    void create_edge(int from, int to, double weight) {
         assert(0<=from && from<num_vertices);
         assert(0<=to && to<num_vertices);
         edges.push_back({from,to,weight});
         static_cast<DS*>(this)->create_edge_internal(from,to,weight,int(size(edges)-1));
     }
 
-    long long run(int root) {
+    long double run(int root) {
         // put all nodes v != root in queue
         std::vector<int> q;
         q.reserve(2 * num_vertices);
@@ -50,7 +50,7 @@ public:
                 q.push_back(vertex);
 
         // while there is a node v in the queue
-        long long answer = 0;
+        long double answer = 0;
         for (int i = 0; i < size(q); ++i)
         {
             int v = q[i];
@@ -60,7 +60,7 @@ public:
             const auto [min_edge_weight,min_edge_idx] = static_cast<DS*>(this)->get_min_edge(v);
             auto& min_edge = edges[min_edge_idx];
             assert(co.find(min_edge.from) != v); // no self-loops allowed here
-
+ 
             inc.push_back(min_edge_idx); // inc edges are stored at queue_id[node] because same node can be rep multiple times
             forest.push_back(i);     // at first each edge is a root in forest
 

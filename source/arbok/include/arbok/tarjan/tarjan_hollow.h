@@ -8,7 +8,7 @@
 namespace arbok {
 
 class TarjanHollow : public Tarjan<TarjanHollow> {
-    using HH = otto::hollow_heap<std::pair<int,int>, std::less<>>;
+    using HH = otto::hollow_heap<std::pair<double,int>, std::less<>>;
     HH::allocator allocator_;
     std::vector<HH> managedSets;
 
@@ -20,11 +20,11 @@ public:
         }
     }
 
-    void create_edge_internal(int /*from*/, int to, int weight, int idx) {
+    void create_edge_internal(int /*from*/, int to, double weight, int idx) {
         managedSets[to].push({weight,idx});
     }
 
-    std::pair<int,int> get_min_edge(int v) {
+    std::pair<double,int> get_min_edge(int v) {
         assert(size(managedSets[v]));
         while (co.find(edges[managedSets[v].top().second].from) == v)
             managedSets[v].pop(); // delete self loops
@@ -33,7 +33,7 @@ public:
         return res;
     }
 
-    void update_incoming_edge_weights(int v, int w) {
+    void update_incoming_edge_weights(int v, double w) {
         managedSets[v].apply_update(-w);
     }
 

@@ -74,10 +74,10 @@ Graph fromFile(const string& file) {
     return graph;
 }
 
-bool isArborescence(const Graph& graph, const vector<int>& arbo, long long claimed_weight, int root) {
+bool isArborescence(const Graph& graph, const vector<int>& arbo, long double claimed_weight, int root) {
     if(size(arbo)!=graph.n-1)
         return false;
-    auto check_sum = 0ll;
+    long double check_sum = 0ll;
     vector has_inc((size_t)graph.n, false);
     for(auto e_idx : arbo) {
         if(e_idx<0 || e_idx>=size(graph.edges))
@@ -89,8 +89,10 @@ bool isArborescence(const Graph& graph, const vector<int>& arbo, long long claim
         has_inc[e.to] = true;
     }
     // weight is same as claimed
-    if(check_sum!=claimed_weight)
+    if(check_sum!=claimed_weight) {
+        cout << "Hmm, not equal weights: " << check_sum << " " << claimed_weight;
         return false;
+    }
     if(has_inc[root])
         return false;
     // each node has one incoming follows from size(arbo)==n-1, root has no inc, no node has more than one inc

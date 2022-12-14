@@ -13,7 +13,7 @@ class TarjanTreap : public Tarjan<TarjanTreap> {
 public:
     TarjanTreap(int n, int m) : Tarjan<TarjanTreap>(n,m), managedSets(n, nullptr), allocator_{m} { }
 
-    void create_edge_internal(int /*from*/, int to, int weight, int idx) {
+    void create_edge_internal(int /*from*/, int to, double weight, int idx) {
         managedSets[to] = treap::merge(managedSets[to], allocator_.new_node(treap::Node(weight,idx)));
     }
 

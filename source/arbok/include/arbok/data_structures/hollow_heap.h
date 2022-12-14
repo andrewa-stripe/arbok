@@ -37,7 +37,7 @@ template <class T, class Compare = std::less<T>> class hollow_heap {
         bool hollow = false;
         node *child = nullptr;
         node *right_sibling = nullptr;
-        int lazy_update = 0;
+        double lazy_update = 0;
         bool operator<(const node &other) const {
             return Compare()(key, other.key);
         }
@@ -130,7 +130,7 @@ template <class T, class Compare = std::less<T>> class hollow_heap {
         root = cur;
         --n; // update size of heap
     }
-    void push_update(node *x, int w) {
+    void push_update(node *x, double w) {
         x->key.first += w;
         x->lazy_update += w;
     }
@@ -178,7 +178,7 @@ template <class T, class Compare = std::less<T>> class hollow_heap {
         other.root = nullptr;
         other.n = 0;
     }
-    void apply_update(int w) {
+    void apply_update(double w) {
         if (root == nullptr) {
             return;
         }

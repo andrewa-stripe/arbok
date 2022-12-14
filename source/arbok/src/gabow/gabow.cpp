@@ -18,7 +18,7 @@ Gabow::Gabow(int n, int /* m */)
     path_edges.reserve(n);
 }
 
-void Gabow::create_edge(int from, int to, int weight) {
+void Gabow::create_edge(int from, int to, double weight) {
     assert(0<=from && from < num_vertices);
     assert(0<=to && to < num_vertices);
     if (from != to)
@@ -26,8 +26,8 @@ void Gabow::create_edge(int from, int to, int weight) {
     edges.push_back({from, to, weight}); // we save even self loops to keep edge ids consistent with the outside
 }
 
-long long Gabow::run(int root) {
-    long long answer = 0;
+long double Gabow::run(int root) {
+    long double answer = 0;
     std::vector<int> seen(num_vertices,-1); // for each vertex, the start of the path that discovered this vertex
     for(int v=0; v<num_vertices; ++v) {
         if(co.same(root,v)) continue;

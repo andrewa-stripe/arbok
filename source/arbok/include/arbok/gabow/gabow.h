@@ -11,18 +11,19 @@ namespace arbok {
         Gabow(int n, int m);
         ~Gabow() = default;
 
-        void create_edge(int from, int to, int weight);
+        void create_edge(int from, int to, double weight);
 
-        long long run(int root);
+        long double run(int root);
 
         std::vector<int> reconstruct(int root);
 
         int contractions = 0;
     protected:
-        struct Edge { int from, to, weight; };
+        struct Edge { int from, to;
+            double weight; };
 
         const int num_vertices;
-        CompressedTree<int> co; // for actual merges and managing offsets
+        CompressedTree<double> co; // for actual merges and managing offsets
 
         std::vector<Edge> edges;                  // all edges
         std::vector<std::vector<int>> incoming_edges; // adjacency list pointing into edges
@@ -39,7 +40,7 @@ namespace arbok {
         std::vector<int> chosen;      // chosen edges
         std::vector<int> forest;      // forest[i]: parent in reconstruction forest of edge edges[chosen[i]] (as ids into chosen)
 
-        inline auto currentWeight(const Edge& e) { return e.weight + co.find_value(e.to); }
+        inline double currentWeight(const Edge& e) { return e.weight + co.find_value(e.to); }
         void extendPath(int u);
         int contractPathPrefix(int u);
         void contractCompletePath(int root);

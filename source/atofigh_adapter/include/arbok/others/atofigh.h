@@ -12,8 +12,8 @@ public:
     Atofigh(int n, int m);
     ~Atofigh();
 
-    void create_edge(int from, int to, int weight);
-    long long run(int root);
+    void create_edge(int from, int to, double weight);
+    long double run(int root);
     std::vector<int> reconstruct(int root);
 
 protected:
